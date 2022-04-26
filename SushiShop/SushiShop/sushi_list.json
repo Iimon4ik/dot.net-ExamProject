@@ -1,139 +1,137 @@
-{
-  "sushi": [
-    {
-      "id": 1,
-      "Name": "Springfield",
-      "Size": "8 pcs",
-      "Weignt": 270,
-      "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-      "Сalories": "588.7 kkal",
-      "Price": 9.2
-    },
-    {
-      "id": 2,
-      "Name": "Ostin",
-      "Size": "8 pcs",
-      "Weignt": 255,
-      "Сompound": "Cream cheese, surimi, Tamago omelet, tomato, Nut sauce, chuka salad.",
-      "Сalories": "528.0 kkal",
-      "Price": 7.8
-    },
-    {
-      "id": 3,
-      "Name": "Mantana",
-      "Size": "8 pcs",
-      "Weignt": 310,
-      "Сompound": "Smoked eel, cream cheese, soy cheese Tofu, avocado, leek, black Tobiko caviar, spicy sauce, Teriyaki sauce. Acute.",
-      "Сalories": "438.3 kkal",
-      "Price": 11
-    },
-    {
-      "id": 4,
-      "Name": "Arkansas",
-      "Size": "8 pcs",
-      "Weignt": 260,
-      "Сompound": "Smoked eel, cream cheese, takuan, Teriyaki sauce, sesame.",
-      "Сalories": "650.7 kkal",
-      "Price": 8.7
-    },
-    {
-      "id": 5,
-      "Name": "Fiji",
-      "Size": "8 pcs",
-      "Weignt": 270,
-      "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-      "Сalories": "528 kkal",
-      "Price": 10
-    },
-    {
-      "id": 6,
-      "Name": "San Antonio",
-      "Size": "8 pcs",
-      "Weignt": 225,
-      "Сompound": "Salmon fillet, tuna fillet, cream cheese, takuan, arugula, rice paper.",
-      "Сalories": "619 kkal",
-      "Price": 7.1
-    },
-    {
-      "id": 7,
-      "Name": "Churanci Black",
-      "Size": "8 pcs",
-      "Weignt": 225,
-      "Сompound": "Tempura shrimp, cream cheese, black Tobiko caviar, mango, Los Angeles sauce.",
-      "Сalories": "520.8 kkal",
-      "Price": 9
-    },
-    {
-      "id": 8,
-      "Name": "Malibu",
-      "Size": "8 pcs",
-      "Weignt": 265,
-      "Сompound": "Salmon fillet, mango, cream cheese, chili, honey, chili strands.",
-      "Сalories": "498.7 kkal",
-      "Price": 10
-    },
-    {
-      "id": 9,
-      "Name": "Okinawa",
-      "Size": "8 pcs",
-      "Weignt": 255,
-      "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-      "Сalories": "468.7 kkal",
-      "Price": 6.4
-    },
-    {
-      "id": 10,
-      "Name": "Hawaii",
-      "Size": "8 pcs",
-      "Weignt": 270,
-      "Сompound": "Salmon fillet, cream cheese, Teriyaki sauce, orange Tobiko caviar, soy sauce, cashew nuts.",
-      "Сalories": "608.7 kkal",
-      "Price": 7.7
-    },
-    {
-      "id": 11,
-      "Name": "Bonito",
-      "Size": "8 pcs",
-      "Weignt": 245,
-      "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, Shrimp, cream cheese, avocado, tomato, arugula.",
-      "Сalories": "496.7 kkal",
-      "Price": 11
-    },
-    {
-      "id": 12,
-      "Name": "Manchester",
-      "Size": "8 pcs",
-      "Weignt": 275,
-      "Сompound": "Grilled salmon fillet, takuan, cream cheese, Tamago omelet, Los Angeles sauce, sesame seeds.",
-      "Сalories": "476.7 kkal",
-      "Price": 5.9
-    },
-    {
-      "id": 13,
-      "Name": "Hong-Kong",
-      "Size": "8 pcs",
-      "Weignt": 300,
-      "Сompound": "Surimi, cream cheese, iceberg lettuce, takuan, spicy sauce. Acute.",
-      "Сalories": "567.7 kkal",
-      "Price": 8.2
-    },
-    {
-      "id": 14,
-      "Name": "Niagara",
-      "Size": "8 pcs",
-      "Weignt": 240,
-      "Сompound": "Shrimp, avocado, cream cheese, tomato, sweet-nut sauce, black Tobiko caviar, chili strands.",
-      "Сalories": "543.7 kkal",
-      "Price": 7.8
-    },
-    {
-      "id": 15,
-      "Name": "Honolulu",
-      "Size": "8 pcs",
-      "Weignt": 235,
-      "Сompound": "Shrimp, cream cheese, avocado, tomato, arugula, cilantro, lime, sweet chili sauce, chili strands.",
-      "Сalories": "531.7 kkal",
-      "Price": 9.3
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "Name": "Springfield",
+    "Size": "8 pcs",
+    "Weignt": 270,
+    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
+    "Сalories": "588.7 kkal",
+    "Price": 9.2
+  },
+  {
+    "id": 2,
+    "Name": "Ostin",
+    "Size": "8 pcs",
+    "Weignt": 255,
+    "Сompound": "Cream cheese, surimi, Tamago omelet, tomato, Nut sauce, chuka salad.",
+    "Сalories": "528.0 kkal",
+    "Price": 7.8
+  },
+  {
+    "id": 3,
+    "Name": "Mantana",
+    "Size": "8 pcs",
+    "Weignt": 310,
+    "Сompound": "Smoked eel, cream cheese, soy cheese Tofu, avocado, leek, black Tobiko caviar, spicy sauce, Teriyaki sauce. Acute.",
+    "Сalories": "438.3 kkal",
+    "Price": 11
+  },
+  {
+    "id": 4,
+    "Name": "Arkansas",
+    "Size": "8 pcs",
+    "Weignt": 260,
+    "Сompound": "Smoked eel, cream cheese, takuan, Teriyaki sauce, sesame.",
+    "Сalories": "650.7 kkal",
+    "Price": 8.7
+  },
+  {
+    "id": 5,
+    "Name": "Fiji",
+    "Size": "8 pcs",
+    "Weignt": 270,
+    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
+    "Сalories": "528 kkal",
+    "Price": 10
+  },
+  {
+    "id": 6,
+    "Name": "San Antonio",
+    "Size": "8 pcs",
+    "Weignt": 225,
+    "Сompound": "Salmon fillet, tuna fillet, cream cheese, takuan, arugula, rice paper.",
+    "Сalories": "619 kkal",
+    "Price": 7.1
+  },
+  {
+    "id": 7,
+    "Name": "Churanci Black",
+    "Size": "8 pcs",
+    "Weignt": 225,
+    "Сompound": "Tempura shrimp, cream cheese, black Tobiko caviar, mango, Los Angeles sauce.",
+    "Сalories": "520.8 kkal",
+    "Price": 9
+  },
+  {
+    "id": 8,
+    "Name": "Malibu",
+    "Size": "8 pcs",
+    "Weignt": 265,
+    "Сompound": "Salmon fillet, mango, cream cheese, chili, honey, chili strands.",
+    "Сalories": "498.7 kkal",
+    "Price": 10
+  },
+  {
+    "id": 9,
+    "Name": "Okinawa",
+    "Size": "8 pcs",
+    "Weignt": 255,
+    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
+    "Сalories": "468.7 kkal",
+    "Price": 6.4
+  },
+  {
+    "id": 10,
+    "Name": "Hawaii",
+    "Size": "8 pcs",
+    "Weignt": 270,
+    "Сompound": "Salmon fillet, cream cheese, Teriyaki sauce, orange Tobiko caviar, soy sauce, cashew nuts.",
+    "Сalories": "608.7 kkal",
+    "Price": 7.7
+  },
+  {
+    "id": 11,
+    "Name": "Bonito",
+    "Size": "8 pcs",
+    "Weignt": 245,
+    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, Shrimp, cream cheese, avocado, tomato, arugula.",
+    "Сalories": "496.7 kkal",
+    "Price": 11
+  },
+  {
+    "id": 12,
+    "Name": "Manchester",
+    "Size": "8 pcs",
+    "Weignt": 275,
+    "Сompound": "Grilled salmon fillet, takuan, cream cheese, Tamago omelet, Los Angeles sauce, sesame seeds.",
+    "Сalories": "476.7 kkal",
+    "Price": 5.9
+  },
+  {
+    "id": 13,
+    "Name": "Hong-Kong",
+    "Size": "8 pcs",
+    "Weignt": 300,
+    "Сompound": "Surimi, cream cheese, iceberg lettuce, takuan, spicy sauce. Acute.",
+    "Сalories": "567.7 kkal",
+    "Price": 8.2
+  },
+  {
+    "id": 14,
+    "Name": "Niagara",
+    "Size": "8 pcs",
+    "Weignt": 240,
+    "Сompound": "Shrimp, avocado, cream cheese, tomato, sweet-nut sauce, black Tobiko caviar, chili strands.",
+    "Сalories": "543.7 kkal",
+    "Price": 7.8
+  },
+  {
+    "id": 15,
+    "Name": "Honolulu",
+    "Size": "8 pcs",
+    "Weignt": 235,
+    "Сompound": "Shrimp, cream cheese, avocado, tomato, arugula, cilantro, lime, sweet chili sauce, chili strands.",
+    "Сalories": "531.7 kkal",
+    "Price": 9.3
+  }
+]

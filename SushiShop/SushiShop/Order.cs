@@ -2,7 +2,7 @@ namespace SushiShop;
 
 public class Order
 {
-    public enum EnumStatus
+    public enum OrderStatus
     {
         Draft,
         Сonfirmed,
@@ -12,23 +12,28 @@ public class Order
     }
     
     private Guid _id;
-    private EnumStatus _status;
+    private OrderStatus _status;
     private List<string> _sushiList;
     private double _price;
     private DateTime _orderData; 
 
-    public Guid Id { get; set; }
-    public EnumStatus Status { get; set; }
-    public List<string> SushiList { get; set; }
-    public double Price { get; set; }
-    public DateTime OrderData { get; set; }
+    public Guid Id { get; private set; }
+    public OrderStatus Status { get; private set; }
+    public List<string> SushiList { get; private set; }
+    public double Price { get; private set; }
+    public DateTime OrderData { get; private set; }
 
     public Order(double price)
     {
         Id = Guid.NewGuid();
-        Status = EnumStatus.Draft;
-        SushiList = new List<string>(10);
+        Status = OrderStatus.Draft;
+        SushiList = new List<string>();
         Price = price;
         OrderData = DateTime.Now;
+    }
+
+    public void AddSushi(string sushi)
+    {
+        SushiList.Add(sushi);
     }
 }
