@@ -1,4 +1,5 @@
 namespace SushiShop;
+
 public class Sushi
 {
     public int Id { get; set; }
@@ -7,5 +8,5 @@ public class Sushi
     public int Weignt { get; set; }
     public string Сompound { get; set; }
     public string Сalories { get; set; }
-    public double Price { get; set; }
+    public float Price { get; set; }
 }

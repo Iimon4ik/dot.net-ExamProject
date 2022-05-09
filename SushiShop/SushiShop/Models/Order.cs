@@ -20,20 +20,39 @@ public class Order
     public Guid Id { get; private set; }
     public OrderStatus Status { get; private set; }
     public List<string> SushiList { get; private set; }
-    public double Price { get; private set; }
-    public DateTime OrderData { get; private set; }
+    public float Price { get; set; }
+    public DateTime OrderDataTime { get; set; }
 
-    public Order(double price)
+    public Order(float price)
     {
         Id = Guid.NewGuid();
         Status = OrderStatus.Draft;
         SushiList = new List<string>();
         Price = price;
-        OrderData = DateTime.Now;
+        OrderDataTime = default;
     }
-
     public void AddSushi(string sushi)
     {
         SushiList.Add(sushi);
+    }
+
+    public void SetStatusToInProgress()
+    {
+         Status = OrderStatus.InProgress;
+    }
+
+    public void SetStatusToForDelivery()
+    {
+        Status = OrderStatus.ForDelivery;
+    }
+
+    public void SetStatusToСonfirmed()
+    {
+        Status = OrderStatus.Сonfirmed;
+    }
+
+    public void SetStatusToDelivered()
+    {
+        Status = OrderStatus.Delivered;
     }
 }
