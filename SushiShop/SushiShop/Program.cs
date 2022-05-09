@@ -172,8 +172,23 @@ void Point1()
             Console.WriteLine($"Total weignt: {totalWeignt} g");
             Console.WriteLine($"Data: {order.OrderDataTime}");
             Console.WriteLine("******************************");
+            
+            Console.WriteLine();
+            
+            Console.WriteLine("For To proceed with your order, enter your details: ");
+            Console.WriteLine("Enter your full name: ");
+            string fullName = Console.ReadLine();
+            Console.WriteLine("Enter your address: ");
+            string address = Console.ReadLine();
+            Console.WriteLine("Enter your E-mail: ");
+            string emailUser = Console.ReadLine();
+            Console.WriteLine("Enter your phone number: ");
+            string phoneNumber = Console.ReadLine();
+
+            Customer customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
+            
             Console.ReadKey();
-            email.SendMail("qoqo.s@yandex.ru", order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt);
+            email.SendMail(emailUser, order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt, customer.FullName, customer.Address, customer.PaymentsMethod);
         }
         else
         {

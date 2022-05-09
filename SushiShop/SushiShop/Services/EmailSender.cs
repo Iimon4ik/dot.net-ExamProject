@@ -12,13 +12,14 @@ public class EmailSender
     public DateTime DataNow { get; set; }
     public int Weignt { get; set; }
     
-    public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weignt)
+    public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weignt, string fullName, string adress, Enum payments)
     {
         MailAddress from = new MailAddress("ForWorkAcc1205@gmail.com", "Sushi Shop Console Project");
         MailAddress to = new MailAddress(userEmail);
         MailMessage msg = new MailMessage(from, to);
         msg.Subject = $"New Test Order {id}";
-        msg.Body = "Hello, Dear Customer! \n" +
+        msg.Body = $"Hello, Dear {fullName}! \n" +
+                   $"\n" +
                    "We have a new order! \n" +
                    "---------------------------------------------------------------------------------------   \n" +
                    $"Order ID: {id} \n" +
@@ -27,8 +28,11 @@ public class EmailSender
                    $"Total weignt: {weignt} g \n" +
                    $"Status: {status} \n" +
                    $"Order Data: {dataNow} \n" +
+                   "--------------------------------------------------------------------------------------  \n" +
                    $"Delivery time: {dataNow.AddHours(1)} \n" +
-                   "--------------------------------------------------------------------------------------  \n";
+                   $"Delivery to: {adress} \n" +
+                   $"Payment method: {payments}";
+        
         SmtpClient smtp = new SmtpClient();
         smtp.Host = "smtp.gmail.com";
         smtp.Port = 587;
