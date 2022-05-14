@@ -27,6 +27,7 @@ bool mainFlag = true;
 bool secondaryFlag = true;
 OrderRepository orders = new OrderRepository();
 Order order = new Order(0);
+orders.CreateOrder(order);
 
 while (mainFlag.Equals(true))
 {
@@ -46,34 +47,41 @@ while (mainFlag.Equals(true))
         Console.WriteLine("Press [3] to cancel your order.");
         Console.WriteLine("--------------------------------");
         Console.WriteLine("Press [0] to exit.");
-        Int16 secondChoice = Int16.Parse(Console.ReadLine());
+        string secondChoice = Console.ReadLine();
         Console.Clear();
         switch (secondChoice)
         {
-            case 1:
+            case "1":
                 Point1();
                 goto Back;
-            case 2:
-                Console.Clear();
-                Console.WriteLine("Please, enter Order ID!");
-                Console.WriteLine("Or [0] for return to prev. menu.");
-                orders.GetOrderById(order.Id);
-                // Guid idGet = Guid.Parse(Console.ReadLine());
-                // if (!idGet.Equals(null) && !idGet.Equals("0"))
-                // {
-                //     orders.GetOrderById(order.Id);
-                // }
-                // else if (idGet.Equals("0"))
-                // {
-                //     Console.Clear();
-                //     goto Back;
-                // }
-                // else
-                // {
-                //     Console.WriteLine("Error!");
-                // }
+            case "2":
+                bool thirdFlag = true;
+                while (thirdFlag)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please, enter Order ID!");
+                    Console.WriteLine("Or [0] for return to prev. menu.");
+                    // orders.GetOrderById(order.Id);
+                    string idGet = Console.ReadLine();
+                    if (!idGet.Equals(null) && !idGet.Equals("0"))
+                    {
+                        Guid.Parse(idGet);
+                        orders.GetOrderById(order.Id);
+                        Console.WriteLine("Press any key to continue...");
+                        goto Back;
+                    }
+                    else if (idGet.Equals("0"))
+                    {
+                        Console.Clear();
+                        goto Back;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error!");
+                    }
+                }
                 break;
-            case 3:
+            case "3":
                 Console.Clear();
                 Console.WriteLine("Please, enter Order ID!");
                 Console.WriteLine("Or [0] for return to prev. menu.");
@@ -104,12 +112,12 @@ while (mainFlag.Equals(true))
                     Console.WriteLine("Error!");
                 }
                 break;
-            case 0:
+            case "0":
                 Point0();
                 break;
             default:
                 PointDefault();
-                break;
+                goto Back;
         }
     }
     else
@@ -133,7 +141,7 @@ void Point1()
         Console.WriteLine($"Price: {sushi[i].Price} $");
         Console.WriteLine("---------------------------");
     }
-    Console.WriteLine("Enter the sushi number [ ] to add to the order and [0] for end: ");
+    Console.WriteLine("Enter the sushi number [1-15] to add to the order and [0] for end: ");
     float sumOrder = 0;
     int totalWeignt = 0;
     while (secondaryFlag.Equals(true))
@@ -145,8 +153,9 @@ void Point1()
             order.SushiList.Add(sushi[enter].Name);
             sumOrder += sushi[enter].Price;
             totalWeignt += sushi[enter].Weignt;
+            Console.WriteLine($"\" Sushi: {sushi[enter].Name} - Weight: {sushi[enter].Weignt} g - Price: {sushi[enter].Price} $\" -> Added to cart!");
         }
-        else if(enter == 0)
+        else if(enter == 0 && sumOrder != 0)
         {
             Console.Clear();
             secondaryFlag = false;
@@ -164,10 +173,12 @@ void Point1()
             Console.WriteLine($"Price: {order.Price} USD.");
             Console.WriteLine($"Status: {order.Status}");
             Console.Write($"Sushi: {list}");
-            foreach (var name in order.SushiList)
-            {
-                Console.Write(name + ", ");
-            }
+            
+            // foreach (var name in order.SushiList)
+            // {
+            //     Console.Write(name + ", ");
+            // }
+            
             Console.WriteLine();
             Console.WriteLine($"Total weignt: {totalWeignt} g");
             Console.WriteLine($"Data: {order.OrderDataTime}");
@@ -176,23 +187,32 @@ void Point1()
             Console.WriteLine();
             
             Console.WriteLine("For To proceed with your order, enter your details: ");
-            Console.WriteLine("Enter your full name: ");
+            Console.WriteLine("Enter your [full name]: ");
             string fullName = Console.ReadLine();
-            Console.WriteLine("Enter your address: ");
+            Console.WriteLine();
+            Console.WriteLine("Enter your [address]: ");
             string address = Console.ReadLine();
-            Console.WriteLine("Enter your E-mail: ");
+            Console.WriteLine();
+            Console.WriteLine("Enter your [E-mail]: ");
             string emailUser = Console.ReadLine();
-            Console.WriteLine("Enter your phone number: ");
+            Console.WriteLine();
+            Console.WriteLine("Enter your [phone number]: ");
             string phoneNumber = Console.ReadLine();
+            Console.WriteLine();
 
             Customer customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
             
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             email.SendMail(emailUser, order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt, customer.FullName, customer.Address, customer.PaymentsMethod);
         }
+        else if (enter == 0 && sumOrder == 0)
+        {
+            Console.WriteLine("Your cart is empty!");
+        }
         else
         {
-            Console.WriteLine("Error!");
+            Console.WriteLine("Wrong data!");
         }
     }
     Console.WriteLine("Thanks for order!");

@@ -15,7 +15,7 @@ public class OrderRepository: IOrderRepository
         {
             if(order.Id.Equals(id))
             {
-                Console.WriteLine($"Order ID: {order.Id} - status - {order.Status}");
+                Console.WriteLine($"Order ID: {order.Id} - STATUS -> {order.Status}");
             }
             else
             {
@@ -30,7 +30,6 @@ public class OrderRepository: IOrderRepository
         {
             if(OrderService.orders[i].Id.Equals(id))
             {
-                Console.WriteLine($"Your Order [ id : {OrderService.orders[i].Id} was removed!");
                 OrderService.orders.Remove(OrderService.orders[i]);
             }
         }
