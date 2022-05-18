@@ -114,10 +114,10 @@ while (mainFlag.Equals(true))
                 }
                 break;
             case "0":
-                Point0();
+                ByeBye();
                 break;
             default:
-                PointDefault();
+                WrongDataMessage();
                 goto Back;
         }
     }
@@ -136,7 +136,7 @@ void Point1()
     {
         Console.WriteLine($"Number: {sushi[i].Id}");
         Console.WriteLine($"Name: {sushi[i].Name}");
-        Console.WriteLine($"Size: {sushi[i].Size}, Weignt: {sushi[i].Weignt} g");
+        Console.WriteLine($"Size: {sushi[i].Size}, Weight: {sushi[i].Weight} g");
         Console.WriteLine($"Сompound: {sushi[i].Сompound}");
         Console.WriteLine($"Сalories: {sushi[i].Сalories}");
         Console.WriteLine($"Price: {sushi[i].Price} $");
@@ -144,8 +144,8 @@ void Point1()
     }
     Console.WriteLine($"Enter the sushi number [1-{sushi.Count}] to add to the order and [0] for end: ");
     float sumOrder = 0;
-    int totalWeignt = 0;
-    
+    int totalWeight = 0;
+
     while (secondaryFlag.Equals(true))
     {
         bool res;
@@ -158,9 +158,8 @@ void Point1()
             {
                 order.SushiList.Add(sushi[userNum - 1].Name);
                 sumOrder += sushi[userNum - 1].Price;
-                totalWeignt += sushi[userNum - 1].Weignt;
-                Console.WriteLine(
-                    $"Sushi: \"{sushi[userNum - 1].Name}\" - Weight: {sushi[userNum - 1].Weignt}g - Price: {sushi[userNum - 1].Price}$ -> Added to cart!");
+                totalWeight += sushi[userNum - 1].Weight;
+                Console.WriteLine($"Sushi: \"{sushi[userNum - 1].Name}\" - Weight: {sushi[userNum - 1].Weight}g - Price: {sushi[userNum - 1].Price}$ -> Added to cart!");
             }
             else if (userNum == 0 && sumOrder != 0)
             {
@@ -169,23 +168,10 @@ void Point1()
                 order.Price = sumOrder;
                 order.OrderDataTime = DateTime.Now;
                 order.SetStatusToInProgress();
-                var list = string.Empty;
-                foreach (var name in order.SushiList) list = list + name + ", ";
+                var cartList = string.Empty;
+                foreach (var name in order.SushiList) cartList = cartList + name + ", ";
                 
-                Console.WriteLine("Your Order is: ");
-                Console.WriteLine("******************************");
-                Console.WriteLine($"Order ID: {order.Id}");
-                Console.WriteLine($"Price: {order.Price} USD.");
-                Console.WriteLine($"Status: {order.Status}");
-                Console.Write($"Sushi: {list}");
-
-                Console.WriteLine();
-                
-                Console.WriteLine($"Total weignt: {totalWeignt} g");
-                Console.WriteLine($"Data: {order.OrderDataTime}");
-                Console.WriteLine("******************************");
-
-                Console.WriteLine();
+                OrderInfo(totalWeight);
 
                 Console.WriteLine("For To proceed with your order, enter your details: ");
                 Console.WriteLine("Enter your [full name]: ");
@@ -212,7 +198,7 @@ void Point1()
 
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
-                email.SendMail(emailUser, order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt,
+                email.SendMail(emailUser, order.Id, order.Price, cartList, order.Status, order.OrderDataTime, totalWeight,
                     customer.FullName, customer.Address, customer.PaymentsMethod);
             }
             else if (userNum == 0 && sumOrder == 0)
@@ -226,28 +212,47 @@ void Point1()
             }
             else
             {
-                Console.WriteLine("Wrong data!");
+                WrongDataMessage();
             }
         }
         else
         {
-            Console.WriteLine("Wrong data!");
+            WrongDataMessage();
         }
     }
 
     Console.WriteLine("Thanks for your order!");
 }
 
-void Point0()
+void ByeBye()
 {
     Console.Clear();
     Console.WriteLine("Bye-bye!");
 }
 
-void PointDefault()
+void WrongDataMessage()
 {
-    Console.Clear();
     Console.WriteLine("Wrong data!");
+}
+
+void OrderInfo(int totalWeight)
+{
+    var cartList = string.Empty;
+    foreach (var name in order.SushiList) cartList = cartList + name + ", ";
+    Console.WriteLine("Your Order is: ");
+    Console.WriteLine("******************************");
+    Console.WriteLine($"Order ID: {order.Id}");
+    Console.WriteLine($"Price: {order.Price} USD.");
+    Console.WriteLine($"Status: {order.Status}");
+    Console.Write($"Sushi: {cartList}");
+
+    Console.WriteLine();
+                
+    Console.WriteLine($"Total weignt: {totalWeight} g");
+    Console.WriteLine($"Data: {order.OrderDataTime}");
+    Console.WriteLine("******************************");
+
+    Console.WriteLine();
 }
 
 

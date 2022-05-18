@@ -14,9 +14,9 @@ public class EmailSender
     public string List { get; set; }
     public Enum Status { get; set; }
     public DateTime DataNow { get; set; }
-    public int Weignt { get; set; }
+    public int Weight { get; set; }
     
-    public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weignt, string fullName, string adress, Enum payments)
+    public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weight, string fullName, string adress, Enum payments)
     {
         MailAddress from = new MailAddress(_email, _displayName);
         MailAddress to = new MailAddress(userEmail);
@@ -29,7 +29,7 @@ public class EmailSender
                    $"Order ID: {id} \n" +
                    $"Price: {price} USD. \n" +
                    $"Sushi: {list} \n" +
-                   $"Total weignt: {weignt} g \n" +
+                   $"Total weignt: {weight} g \n" +
                    $"Status: {status} \n" +
                    $"Order Data: {dataNow} \n" +
                    "--------------------------------------------------------------------------------------  \n" +
