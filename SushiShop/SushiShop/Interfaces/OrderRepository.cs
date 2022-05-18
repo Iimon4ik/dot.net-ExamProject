@@ -4,9 +4,21 @@ namespace SushiShop.Repositorys;
 
 public class OrderRepository: IOrderRepository 
 {
-    public void CreateOrder(Order order)
+    public Order CreateOrder()
     {
-        OrderService.orders.Add(order);
+        var order = new Order();
+        if (OrderService.orders.Count == 0)
+        {
+            OrderService.orders.Add(order);
+            return order;
+        }
+        else
+        {
+            var order1 = new Order();
+            order = order1;
+            OrderService.orders.Add(order);
+            return order;
+        }
     }
 
     public void GetOrderById(Guid id)

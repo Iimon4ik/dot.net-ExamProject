@@ -2,7 +2,7 @@ namespace SushiShop.Interfaces;
 
 public interface IOrderRepository
 {
-   public void CreateOrder(Order order);
+   public Order CreateOrder();
    public void GetOrderById(Guid id);
    void DeleteOrder(Guid id);
    void AddSushi(string sushi);

@@ -23,12 +23,12 @@ public class Order
     public float Price { get; set; }
     public DateTime OrderDataTime { get; set; }
 
-    public Order(float price)
+    public Order()
     {
         Id = Guid.NewGuid();
         Status = OrderStatus.Draft;
         SushiList = new List<string>();
-        Price = price;
+        Price = 0;
         OrderDataTime = default;
     }
     public void AddSushi(string sushi)

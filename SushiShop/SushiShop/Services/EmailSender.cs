@@ -4,6 +4,10 @@ using System.Net.Mail;
 
 public class EmailSender
 {
+    private string _password = "7762185!@#";
+    private string _email = "ForWorkAcc1205@gmail.com";
+    private string _displayName = "Sushi Shop";
+    
     public string UserEmail { get; set; }
     public Guid Id { get; set; }
     public float Price { get; set; }
@@ -14,14 +18,14 @@ public class EmailSender
     
     public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weignt, string fullName, string adress, Enum payments)
     {
-        MailAddress from = new MailAddress("ForWorkAcc1205@gmail.com", "Sushi Shop Console Project");
+        MailAddress from = new MailAddress(_email, _displayName);
         MailAddress to = new MailAddress(userEmail);
         MailMessage msg = new MailMessage(from, to);
         msg.Subject = $"New Test Order {id}";
         msg.Body = $"Hello, Dear {fullName}! \n" +
                    $"\n" +
-                   "We have a new order! \n" +
-                   "---------------------------------------------------------------------------------------   \n" +
+                   "We have received your order! \n" +
+                   "---------------------------------------------------------------------------------------  \n" +
                    $"Order ID: {id} \n" +
                    $"Price: {price} USD. \n" +
                    $"Sushi: {list} \n" +
@@ -38,7 +42,7 @@ public class EmailSender
         smtp.Port = 587;
         smtp.EnableSsl = true;
         smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
-        smtp.Credentials = new NetworkCredential(from.Address, "7762185!@#");
+        smtp.Credentials = new NetworkCredential(from.Address, _password);
         smtp.Send(msg);
     }
 }

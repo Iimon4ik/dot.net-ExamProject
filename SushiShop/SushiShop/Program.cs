@@ -8,6 +8,7 @@ using SushiShop.Repositorys;
 // Тут берем суши из JSON и закидываем в список
 
 const string PATH = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/sushi_list.json";
+
 var sushi = GetSushiMenu();
 
 static List<Sushi> GetSushiMenu()
@@ -22,12 +23,11 @@ static List<Sushi> GetSushiMenu()
 };
 
 EmailSender email = new EmailSender();
-
+bool secondaryFlag;
 bool mainFlag = true;
-bool secondaryFlag = true;
-OrderRepository orders = new OrderRepository();
-Order order = new Order(0);
-orders.CreateOrder(order);
+OrderRepository orderRepository = new OrderRepository();
+Order order = orderRepository.CreateOrder();
+
 
 while (mainFlag.Equals(true))
 {
@@ -52,6 +52,7 @@ while (mainFlag.Equals(true))
         switch (secondChoice)
         {
             case "1":
+                secondaryFlag = true;
                 Point1();
                 goto Back;
             case "2":
@@ -66,7 +67,7 @@ while (mainFlag.Equals(true))
                     if (!idGet.Equals(null) && !idGet.Equals("0"))
                     {
                         Guid.Parse(idGet);
-                        orders.GetOrderById(order.Id);
+                        orderRepository.GetOrderById(order.Id);
                         Console.WriteLine("Press any key to continue...");
                         goto Back;
                     }
@@ -86,7 +87,7 @@ while (mainFlag.Equals(true))
                 Console.WriteLine("Please, enter Order ID!");
                 Console.WriteLine("Or [0] for return to prev. menu.");
                 string idCancel = Console.ReadLine();
-                if (idCancel.Equals("aaaaa") && !idCancel.Equals("0"))
+                if (idCancel.Equals(order.Id) && !idCancel.Equals("0"))
                 {
                     Console.Clear();
                     Console.WriteLine($"Your order ID [{idCancel}] has been successfully canceled!");
@@ -141,81 +142,100 @@ void Point1()
         Console.WriteLine($"Price: {sushi[i].Price} $");
         Console.WriteLine("---------------------------");
     }
-    Console.WriteLine("Enter the sushi number [1-15] to add to the order and [0] for end: ");
+    Console.WriteLine($"Enter the sushi number [1-{sushi.Count}] to add to the order and [0] for end: ");
     float sumOrder = 0;
     int totalWeignt = 0;
+    
     while (secondaryFlag.Equals(true))
     {
-        int enter = Int16.Parse(Console.ReadLine());
-                    
-        if (enter > 0 && enter < 16)
+        bool res;
+        int userNum;
+        var enter = Console.ReadLine();
+        res = int.TryParse(enter, out userNum);
+        if (res == true)
         {
-            order.SushiList.Add(sushi[enter].Name);
-            sumOrder += sushi[enter].Price;
-            totalWeignt += sushi[enter].Weignt;
-            Console.WriteLine($"\" Sushi: {sushi[enter].Name} - Weight: {sushi[enter].Weignt} g - Price: {sushi[enter].Price} $\" -> Added to cart!");
-        }
-        else if(enter == 0 && sumOrder != 0)
-        {
-            Console.Clear();
-            secondaryFlag = false;
-            order.Price = sumOrder;
-            order.OrderDataTime = DateTime.Now;
-            order.SetStatusToInProgress();
-            string list = String.Empty;
-            foreach (var name in order.SushiList)
+            if (userNum > 0 && userNum <= sushi.Count)
             {
-                list = list + name + ", ";
+                order.SushiList.Add(sushi[userNum - 1].Name);
+                sumOrder += sushi[userNum - 1].Price;
+                totalWeignt += sushi[userNum - 1].Weignt;
+                Console.WriteLine(
+                    $"Sushi: \"{sushi[userNum - 1].Name}\" - Weight: {sushi[userNum - 1].Weignt}g - Price: {sushi[userNum - 1].Price}$ -> Added to cart!");
             }
-            Console.WriteLine("Your Order is: ");
-            Console.WriteLine("******************************");
-            Console.WriteLine($"Order ID: {order.Id}" );
-            Console.WriteLine($"Price: {order.Price} USD.");
-            Console.WriteLine($"Status: {order.Status}");
-            Console.Write($"Sushi: {list}");
-            
-            // foreach (var name in order.SushiList)
-            // {
-            //     Console.Write(name + ", ");
-            // }
-            
-            Console.WriteLine();
-            Console.WriteLine($"Total weignt: {totalWeignt} g");
-            Console.WriteLine($"Data: {order.OrderDataTime}");
-            Console.WriteLine("******************************");
-            
-            Console.WriteLine();
-            
-            Console.WriteLine("For To proceed with your order, enter your details: ");
-            Console.WriteLine("Enter your [full name]: ");
-            string fullName = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("Enter your [address]: ");
-            string address = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("Enter your [E-mail]: ");
-            string emailUser = Console.ReadLine();
-            Console.WriteLine();
-            Console.WriteLine("Enter your [phone number]: ");
-            string phoneNumber = Console.ReadLine();
-            Console.WriteLine();
+            else if (userNum == 0 && sumOrder != 0)
+            {
+                Console.Clear();
+                secondaryFlag = false;
+                order.Price = sumOrder;
+                order.OrderDataTime = DateTime.Now;
+                order.SetStatusToInProgress();
+                var list = string.Empty;
+                foreach (var name in order.SushiList) list = list + name + ", ";
+                
+                Console.WriteLine("Your Order is: ");
+                Console.WriteLine("******************************");
+                Console.WriteLine($"Order ID: {order.Id}");
+                Console.WriteLine($"Price: {order.Price} USD.");
+                Console.WriteLine($"Status: {order.Status}");
+                Console.Write($"Sushi: {list}");
 
-            Customer customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
-            
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
-            email.SendMail(emailUser, order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt, customer.FullName, customer.Address, customer.PaymentsMethod);
-        }
-        else if (enter == 0 && sumOrder == 0)
-        {
-            Console.WriteLine("Your cart is empty!");
+                Console.WriteLine();
+                
+                Console.WriteLine($"Total weignt: {totalWeignt} g");
+                Console.WriteLine($"Data: {order.OrderDataTime}");
+                Console.WriteLine("******************************");
+
+                Console.WriteLine();
+
+                Console.WriteLine("For To proceed with your order, enter your details: ");
+                Console.WriteLine("Enter your [full name]: ");
+                var fullName = Console.ReadLine();
+                
+                Console.WriteLine();
+                
+                Console.WriteLine("Enter your [address]: ");
+                var address = Console.ReadLine();
+                
+                Console.WriteLine();
+                
+                Console.WriteLine("Enter your [E-mail]: ");
+                var emailUser = Console.ReadLine();
+                
+                Console.WriteLine();
+                
+                Console.WriteLine("Enter your [phone number]: ");
+                var phoneNumber = Console.ReadLine();
+                
+                Console.WriteLine();
+
+                var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
+
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                email.SendMail(emailUser, order.Id, order.Price, list, order.Status, order.OrderDataTime, totalWeignt,
+                    customer.FullName, customer.Address, customer.PaymentsMethod);
+            }
+            else if (userNum == 0 && sumOrder == 0)
+            {
+                Console.WriteLine("Your cart is empty!");
+                Console.WriteLine("Press any key to continue...");
+                orderRepository.DeleteOrder(order.Id);
+                Console.ReadKey();
+                
+                secondaryFlag = false;
+            }
+            else
+            {
+                Console.WriteLine("Wrong data!");
+            }
         }
         else
         {
             Console.WriteLine("Wrong data!");
         }
     }
-    Console.WriteLine("Thanks for order!");
+
+    Console.WriteLine("Thanks for your order!");
 }
 
 void Point0()
