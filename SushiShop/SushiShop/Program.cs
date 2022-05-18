@@ -164,34 +164,34 @@ void Point1()
             else if (userNum == 0 && sumOrder != 0)
             {
                 Console.Clear();
+                
                 secondaryFlag = false;
                 order.Price = sumOrder;
-                order.OrderDataTime = DateTime.Now;
-                order.SetStatusToInProgress();
                 var cartList = string.Empty;
+                order.OrderDataTime = DateTime.Now;
+
+                order.SetStatusToInProgress();
+                
                 foreach (var name in order.SushiList) cartList = cartList + name + ", ";
                 
                 OrderInfo(totalWeight);
 
                 Console.WriteLine("For To proceed with your order, enter your details: ");
-                Console.WriteLine("Enter your [full name]: ");
-                var fullName = Console.ReadLine();
                 
+                Console.WriteLine("Enter your [full name]: ");
+                string fullName = Validation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [address]: ");
-                var address = Console.ReadLine();
-                
+                string address = Validation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [E-mail]: ");
-                var emailUser = Console.ReadLine();
-                
+                string emailUser = EmailAddressValidation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [phone number]: ");
-                var phoneNumber = Console.ReadLine();
-                
+                string phoneNumber = Validation();
                 Console.WriteLine();
 
                 var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
@@ -233,6 +233,45 @@ void ByeBye()
 void WrongDataMessage()
 {
     Console.WriteLine("Wrong data!");
+}
+
+string Validation()
+{
+    while (true)
+    {
+        string data = Console.ReadLine();
+        if (data.Equals(String.Empty))
+        {
+            Console.Write("You didn't enter anything! Enter a valid value!");
+            Console.WriteLine();
+        }
+        else
+        {
+            return data;
+        }
+    }
+}
+
+string EmailAddressValidation()
+{
+    while (true)
+    {
+        string data = Console.ReadLine();
+        if (data.Equals(String.Empty))
+        {
+            Console.Write("You didn't enter anything! Enter a valid value!");
+            Console.WriteLine();
+        }
+        else
+        {
+            if (data.Contains('@') && (data.Contains(".ru")||data.Contains(".com")||data.Contains(".by")||data.Contains(".org")||data.Contains(".ua")||data.Contains(".net")))
+            {
+                return data;
+            }
+            Console.Write("Your email should contain '@' and domain (.com/.ru/.by/.ua/.org/.net)! Enter a valid value!");
+            Console.WriteLine();
+        }
+    }
 }
 
 void OrderInfo(int totalWeight)
