@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SushiShop;
-using System.Net;
-using System.Net.Mail;
+using SushiShop.Interfaces;
 using SushiShop.Repositorys;
 
-// Тут берем суши из JSON и закидываем в список
-
-const string PATH = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/sushi_list.json";
+const string PATH = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/Data/sushi_list.json";
+// string PATH = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"SushiShop\sushi_list.json");
 
 var sushi = GetSushiMenu();
 
@@ -26,7 +23,6 @@ EmailSender email = new EmailSender();
 bool secondaryFlag;
 bool mainFlag = true;
 OrderRepository orderRepository = new OrderRepository();
-Order order = orderRepository.CreateOrder();
 
 
 while (mainFlag.Equals(true))
@@ -36,6 +32,7 @@ while (mainFlag.Equals(true))
     string firstChoice = Console.ReadLine();
     if ((firstChoice.ToLower()).Equals("start"))
     {
+        Order order = orderRepository.CreateOrder();
         mainFlag = false;
         Console.Clear();
         Back:
@@ -53,11 +50,11 @@ while (mainFlag.Equals(true))
         {
             case "1":
                 secondaryFlag = true;
-                Point1();
+                MainMenu(order);
                 goto Back;
             case "2":
-                bool thirdFlag = true;
-                while (thirdFlag)
+                // bool thirdFlag = true;
+                while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("Please, enter Order ID!");
@@ -71,17 +68,7 @@ while (mainFlag.Equals(true))
                         Console.WriteLine("Press any key to continue...");
                         goto Back;
                     }
-                    else if (idGet.Equals("0"))
-                    {
-                        Console.Clear();
-                        goto Back;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error!");
-                    }
                 }
-                break;
             case "3":
                 Console.Clear();
                 Console.WriteLine("Please, enter Order ID!");
@@ -98,10 +85,10 @@ while (mainFlag.Equals(true))
                     {
                         goto Back;
                     }
-                    else
-                    {
-                        Console.WriteLine("Error!");
-                    }
+                    // else
+                    // {
+                    //     Validator.WrongDataMessage();
+                    // }
                 }
                 else if (idCancel.Equals("0"))
                 {
@@ -110,25 +97,27 @@ while (mainFlag.Equals(true))
                 }
                 else
                 {
-                    Console.WriteLine("Error!");
+                    Validator.WrongDataMessage();
                 }
                 break;
             case "0":
+                orderRepository.DeleteOrder(order.Id);
                 ByeBye();
                 break;
             default:
-                WrongDataMessage();
+                Validator.WrongDataMessage();
                 goto Back;
         }
     }
     else
     {
-        Console.WriteLine("Wrong data!");
+        Validator.WrongDataMessage();
     }
 }
 
-void Point1()
+void MainMenu(Order order)
 {
+    order = orderRepository.CreateOrder();
     Console.Clear();
     Console.WriteLine("--- Sushi-Shop Menu ---");
     Console.WriteLine();
@@ -145,6 +134,7 @@ void Point1()
     Console.WriteLine($"Enter the sushi number [1-{sushi.Count}] to add to the order and [0] for end: ");
     float sumOrder = 0;
     int totalWeight = 0;
+    List<string> draftList = new List<string>();
 
     while (secondaryFlag.Equals(true))
     {
@@ -156,43 +146,48 @@ void Point1()
         {
             if (userNum > 0 && userNum <= sushi.Count)
             {
-                order.SushiList.Add(sushi[userNum - 1].Name);
+                draftList.Add(sushi[userNum - 1].Name);
                 sumOrder += sushi[userNum - 1].Price;
                 totalWeight += sushi[userNum - 1].Weight;
                 Console.WriteLine($"Sushi: \"{sushi[userNum - 1].Name}\" - Weight: {sushi[userNum - 1].Weight}g - Price: {sushi[userNum - 1].Price}$ -> Added to cart!");
             }
             else if (userNum == 0 && sumOrder != 0)
             {
+                order.SushiList = draftList;
                 Console.Clear();
-                
                 secondaryFlag = false;
                 order.Price = sumOrder;
                 var cartList = string.Empty;
                 order.OrderDataTime = DateTime.Now;
+                bool trueData;
 
                 order.SetStatusToInProgress();
                 
                 foreach (var name in order.SushiList) cartList = cartList + name + ", ";
                 
-                OrderInfo(totalWeight);
+                OrderInfo(order, totalWeight);
 
                 Console.WriteLine("For To proceed with your order, enter your details: ");
                 
                 Console.WriteLine("Enter your [full name]: ");
-                string fullName = Validation();
+                string fullName = Validator.Validation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [address]: ");
-                string address = Validation();
+                string address = Validator.Validation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [E-mail]: ");
-                string emailUser = EmailAddressValidation();
+                string emailUser = Validator.EmailAddressValidation();
                 Console.WriteLine();
                 
                 Console.WriteLine("Enter your [phone number]: ");
-                string phoneNumber = Validation();
+                string phoneNumber = Validator.PhoneValidation();
                 Console.WriteLine();
+                
+                Console.Write("Confirm that the entered data is correct. Press [Y] - yes, [N] - no.");
+                
+                trueData = Validator.ConfirmationValidation();
 
                 var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
 
@@ -212,12 +207,12 @@ void Point1()
             }
             else
             {
-                WrongDataMessage();
+                Validator.WrongDataMessage();
             }
         }
         else
         {
-            WrongDataMessage();
+            Validator.WrongDataMessage();
         }
     }
 
@@ -230,51 +225,7 @@ void ByeBye()
     Console.WriteLine("Bye-bye!");
 }
 
-void WrongDataMessage()
-{
-    Console.WriteLine("Wrong data!");
-}
-
-string Validation()
-{
-    while (true)
-    {
-        string data = Console.ReadLine();
-        if (data.Equals(String.Empty))
-        {
-            Console.Write("You didn't enter anything! Enter a valid value!");
-            Console.WriteLine();
-        }
-        else
-        {
-            return data;
-        }
-    }
-}
-
-string EmailAddressValidation()
-{
-    while (true)
-    {
-        string data = Console.ReadLine();
-        if (data.Equals(String.Empty))
-        {
-            Console.Write("You didn't enter anything! Enter a valid value!");
-            Console.WriteLine();
-        }
-        else
-        {
-            if (data.Contains('@') && (data.Contains(".ru")||data.Contains(".com")||data.Contains(".by")||data.Contains(".org")||data.Contains(".ua")||data.Contains(".net")))
-            {
-                return data;
-            }
-            Console.Write("Your email should contain '@' and domain (.com/.ru/.by/.ua/.org/.net)! Enter a valid value!");
-            Console.WriteLine();
-        }
-    }
-}
-
-void OrderInfo(int totalWeight)
+void OrderInfo(Order order, int totalWeight)
 {
     var cartList = string.Empty;
     foreach (var name in order.SushiList) cartList = cartList + name + ", ";

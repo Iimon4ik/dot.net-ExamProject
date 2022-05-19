@@ -18,8 +18,8 @@ public class Order
     private DateTime _orderData; 
 
     public Guid Id { get; private set; }
-    public OrderStatus Status { get; private set; }
-    public List<string> SushiList { get; private set; }
+    public OrderStatus Status { get; set; }
+    public List<string> SushiList { get; set; }
     public float Price { get; set; }
     public DateTime OrderDataTime { get; set; }
 

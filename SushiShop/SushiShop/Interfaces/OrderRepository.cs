@@ -7,18 +7,9 @@ public class OrderRepository: IOrderRepository
     public Order CreateOrder()
     {
         var order = new Order();
-        if (OrderService.orders.Count == 0)
-        {
-            OrderService.orders.Add(order);
-            return order;
-        }
-        else
-        {
-            var order1 = new Order();
-            order = order1;
-            OrderService.orders.Add(order);
-            return order;
-        }
+        OrderService.orders.Add(order);
+        return order;
+
     }
 
     public void GetOrderById(Guid id)
@@ -52,23 +43,23 @@ public class OrderRepository: IOrderRepository
         throw new NotImplementedException();
     }
 
-    public void SetStatusToInProgress()
+    public void SetStatusToInProgress(Order order)
     {
-        throw new NotImplementedException();
+        order.Status = Order.OrderStatus.InProgress;
     }
 
-    public void SetStatusToForDelivery()
+    public void SetStatusToForDelivery(Order order)
     {
-        throw new NotImplementedException();
+        order.Status = Order.OrderStatus.ForDelivery;
     }
 
-    public void SetStatusToСonfirmed()
+    public void SetStatusToСonfirmed(Order order)
     {
-        throw new NotImplementedException();
+        order.Status = Order.OrderStatus.Сonfirmed;
     }
 
-    public void SetStatusToDelivered()
+    public void SetStatusToDelivered(Order order)
     {
-        throw new NotImplementedException();
+        order.Status = Order.OrderStatus.Delivered;
     }
 }
