@@ -1,6 +1,6 @@
-using SushiShop.Interfaces;
+using SushiShop.Models;
 
-namespace SushiShop.Repositorys;
+namespace SushiShop.Interfaces;
 
 public class OrderRepository: IOrderRepository 
 {
@@ -11,36 +11,54 @@ public class OrderRepository: IOrderRepository
         return order;
 
     }
-
+    
     public void GetOrderById(Guid id)
     {
-        foreach (Order order in OrderService.orders)
+        try
         {
-            if(order.Id.Equals(id))
+            foreach (Order order in OrderService.orders)
             {
-                Console.WriteLine($"Order ID: {order.Id} - STATUS -> {order.Status}");
+                if (order.Id.Equals(id))
+                {
+                    Console.WriteLine($"Order ID: {order.Id} - STATUS -> {order.Status}");
+                }
+                else
+                {
+                    throw new Exception("Order with this ID doesn't exist!");
+                }
             }
-            else
-            {
-                Console.WriteLine("Order with this ID doesn't exist!");
-            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Exception: {exception.Message}");
+            Console.WriteLine($"Method: {exception.TargetSite}");
+            Console.WriteLine($"Exception StackTrace: {exception.StackTrace}");
+            Console.WriteLine();
         }
     }
 
     public void DeleteOrder(Guid id)
     {
-        for (int i = OrderService.orders.Count - 1; i >= 0; i--)
+        try
         {
-            if(OrderService.orders[i].Id.Equals(id))
+            for (int i = OrderService.orders.Count - 1; i >= 0; i--)
             {
-                OrderService.orders.Remove(OrderService.orders[i]);
+                if (OrderService.orders[i].Id.Equals(id))
+                {
+                    OrderService.orders.Remove(OrderService.orders[i]);
+                }
             }
+            throw new Exception("Order with this ID doesn't exist!");
         }
-    }
-
-    public void AddSushi(string sushi)
-    {
-        throw new NotImplementedException();
+        catch(Exception exception)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Exception: {exception.Message}");
+            Console.WriteLine($"Method: {exception.TargetSite}");
+            Console.WriteLine($"Exception StackTrace: {exception.StackTrace}");
+            Console.WriteLine();
+        }
     }
 
     public void SetStatusToInProgress(Order order)

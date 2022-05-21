@@ -1,3 +1,5 @@
+using SushiShop.Models;
+
 namespace SushiShop;
 
 public class OrderService

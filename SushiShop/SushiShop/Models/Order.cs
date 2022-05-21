@@ -1,5 +1,10 @@
-namespace SushiShop;
+using Microsoft.Extensions.Logging;
+using SushiShop.Attribute;
+using SushiShop.Services;
 
+namespace SushiShop.Models;
+
+[PriceValidation(0)]
 public class Order
 {
     public enum OrderStatus
@@ -17,11 +22,17 @@ public class Order
     private double _price;
     private DateTime _orderData; 
 
+    private readonly IFileService _fileService;
+    private readonly ILoggerService<Order> _loggerService;
+    
     public Guid Id { get; private set; }
     public OrderStatus Status { get; set; }
     public List<string> SushiList { get; set; }
     public float Price { get; set; }
     public DateTime OrderDataTime { get; set; }
+
+    public event OrderHeandler? Notify = null;
+
 
     public Order()
     {
@@ -30,6 +41,14 @@ public class Order
         SushiList = new List<string>();
         Price = 0;
         OrderDataTime = default;
+        _fileService = new FileService();
+        _loggerService = new LoggerService<Order>(_fileService);
+        _loggerService.Log(LogLevel.Information, $"New order {Id} created.");
+    }
+
+    public void InvokeEvent()
+    {
+        Notify.Invoke();
     }
     public void AddSushi(string sushi)
     {
@@ -55,4 +74,6 @@ public class Order
     {
         Status = OrderStatus.Delivered;
     }
+    
+    public delegate void OrderHeandler();
 }

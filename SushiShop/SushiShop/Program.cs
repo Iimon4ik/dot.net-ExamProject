@@ -1,29 +1,29 @@
-﻿using Newtonsoft.Json;
+﻿using System.Reflection;
+using Newtonsoft.Json;
 using SushiShop;
 using SushiShop.Interfaces;
-using SushiShop.Repositorys;
+using SushiShop.Models;
 
-const string PATH = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/Data/sushi_list.json";
-// string PATH = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"SushiShop\sushi_list.json");
-
-var sushi = GetSushiMenu();
+const string path = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/Data/sushi_list.json";
+// string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data/sushi_list.json");
 
 static List<Sushi> GetSushiMenu()
 {
-    string fileName = PATH;
+    string fileName = path;
     if (File.Exists(fileName))
     {
         var sushi = JsonConvert.DeserializeObject<List<Sushi>>(File.ReadAllText(fileName));
         return sushi;
     }
-    return null; 
-};
+    return null;
+    };
+var sushi = GetSushiMenu();
 
 EmailSender email = new EmailSender();
 bool secondaryFlag;
 bool mainFlag = true;
 OrderRepository orderRepository = new OrderRepository();
-
+CustomerRepository customerRepository = new CustomerRepository();
 
 while (mainFlag.Equals(true))
 {
@@ -53,49 +53,39 @@ while (mainFlag.Equals(true))
                 MainMenu(order);
                 goto Back;
             case "2":
-                // bool thirdFlag = true;
+                bool thirdFlag = true;
                 while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("Please, enter Order ID!");
                     Console.WriteLine("Or [0] for return to prev. menu.");
-                    // orders.GetOrderById(order.Id);
-                    string idGet = Console.ReadLine();
-                    if (!idGet.Equals(null) && !idGet.Equals("0"))
+                    string? idGet = Validator.Validation();
+                    
+                    if (idGet != null && !idGet.Equals(null) && !idGet.Equals("0"))
                     {
-                        Guid.Parse(idGet);
-                        orderRepository.GetOrderById(order.Id);
-                        Console.WriteLine("Press any key to continue...");
+                        orderRepository.GetOrderById(Guid.Parse(idGet));
+                    }
+                    else if(idGet.Equals("0"))
+                    {
                         goto Back;
                     }
                 }
             case "3":
-                Console.Clear();
-                Console.WriteLine("Please, enter Order ID!");
-                Console.WriteLine("Or [0] for return to prev. menu.");
-                string idCancel = Console.ReadLine();
-                if (idCancel.Equals(order.Id) && !idCancel.Equals("0"))
+                while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine($"Your order ID [{idCancel}] has been successfully canceled!");
-                    Console.WriteLine("---------------------------");
-                    Console.WriteLine("Press [0] for return to prev. menu.");
-                    string idCancelBack = Console.ReadLine();
-                    if (idCancelBack.Equals("0"))
+                    Console.WriteLine("Please, enter Order ID!");
+                    Console.WriteLine("Or [0] for return to prev. menu.");
+                    string idGet = Console.ReadLine();
+                    if (!idGet.Equals(null) && !idGet.Equals("0"))
                     {
+                        orderRepository.DeleteOrder(Guid.Parse(idGet));
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
                         goto Back;
                     }
-                }
-                else if (idCancel.Equals("0"))
-                {
-                    Console.Clear();
-                    goto Back;
-                }
-                else
-                {
                     Validator.WrongDataMessage();
                 }
-                break;
             case "0":
                 orderRepository.DeleteOrder(order.Id);
                 ByeBye();
@@ -186,19 +176,21 @@ void MainMenu(Order order)
                 Console.WriteLine();
                 
                 trueData = Validator.ConfirmationValidation();
+                
                 if (trueData.Equals("y"))
                 {
-                    var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
+                    Customer customer = customerRepository.CreateCustomer(fullName, address, phoneNumber, order.Id);
                     order.SetStatusToСonfirmed();
-
-                    // Console.WriteLine("Press any key to continue...");
-                    // Console.ReadKey();
                     email.SendMailCreateOrder(emailUser, order.Id, order.Price, cartList, order.Status, order.OrderDataTime, totalWeight, customer.FullName, customer.Address, customer.PaymentsMethod);
+                    OrderService.orders.Add(order);
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                     Console.WriteLine("Thanks for your order!");
                 }
-                orderRepository.DeleteOrder(order.Id);
+                else if ((trueData.Equals("n")))
+                {
+                    orderRepository.DeleteOrder(order.Id);
+                }
             }
             else if (userNum == 0 && sumOrder == 0)
             {

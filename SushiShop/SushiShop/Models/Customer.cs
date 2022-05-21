@@ -1,7 +1,12 @@
-namespace SushiShop;
+using Microsoft.Extensions.Logging;
+using SushiShop.Services;
 
+namespace SushiShop.Models;
 public class Customer
 {
+    private readonly IFileService _fileService;
+    private readonly ILoggerService<Customer> _loggerService;
+    
     private string _fullName;
     private string _address;
     private string _eMail;
@@ -16,20 +21,21 @@ public class Customer
         CreditCard,
         LongTermsPayments
     }
-    public string FullName { get; set; }
-    public string Address { get; set; }
-    public string Email { get; set; }
-    public Payments PaymentsMethod { get; set; }
-    public string PhoneNumber { get; set; }
-    public Guid OrderId { get; set; }
+    public string FullName { get; }
+    public string Address { get; }
+    public Payments PaymentsMethod { get; }
+    private string PhoneNumber { get; }
+    private Guid OrderId { get; }
 
-    public Customer(string fullName,string address,string email, Guid orderId, string phoneNumber)
+    public Customer(string fullName, string address, string phoneNumber, Guid orderId)
     {
+        _fileService = new FileService();
+        _loggerService = new LoggerService<Customer>(_fileService);
         FullName = fullName;
         Address = address;
-        Email = email;
         PaymentsMethod = Payments.Cash;
         PhoneNumber = phoneNumber;
         OrderId = orderId;
+        _loggerService.Log(LogLevel.Information, $"New customer {FullName} created.");
     }
 }
