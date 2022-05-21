@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace SushiShop;
 
 public static class Validator
@@ -53,17 +55,18 @@ public static class Validator
             }
             else
             {
-                if (data.Contains('@') && (data.Contains(".ru")||data.Contains(".com")||data.Contains(".by")||data.Contains(".org")||data.Contains(".ua")||data.Contains(".net")))
+                if(Regex.IsMatch(data, @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                       RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
                 {
                     return data;
                 }
-                Console.Write("Your email should contain '@' and domain (.com/.ru/.by/.ua/.org/.net)! Enter a valid value!");
+                Console.Write("Your email should be valid!");
                 Console.WriteLine();
             }
         }
     }
 
-    public static bool ConfirmationValidation()
+    public static string ConfirmationValidation()
     {
         while (true)
         {
@@ -75,7 +78,7 @@ public static class Validator
             }
             else if ((data.ToLower().Equals("n")) || (data.ToLower().Equals("y")))
             {
-                return true;
+                return data;
             }
             else
             {

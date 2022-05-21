@@ -85,10 +85,6 @@ while (mainFlag.Equals(true))
                     {
                         goto Back;
                     }
-                    // else
-                    // {
-                    //     Validator.WrongDataMessage();
-                    // }
                 }
                 else if (idCancel.Equals("0"))
                 {
@@ -159,7 +155,7 @@ void MainMenu(Order order)
                 order.Price = sumOrder;
                 var cartList = string.Empty;
                 order.OrderDataTime = DateTime.Now;
-                bool trueData;
+                string trueData;
 
                 order.SetStatusToInProgress();
                 
@@ -185,16 +181,24 @@ void MainMenu(Order order)
                 string phoneNumber = Validator.PhoneValidation();
                 Console.WriteLine();
                 
-                Console.Write("Confirm that the entered data is correct. Press [Y] - yes, [N] - no.");
+                Console.Write("Confirm that the entered data is correct.");
+                Console.Write("Press [Y] - yes, [N] - no.");
+                Console.WriteLine();
                 
                 trueData = Validator.ConfirmationValidation();
+                if (trueData.Equals("y"))
+                {
+                    var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
+                    order.SetStatusToСonfirmed();
 
-                var customer = new Customer(fullName, address, emailUser, order.Id, phoneNumber);
-
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                email.SendMail(emailUser, order.Id, order.Price, cartList, order.Status, order.OrderDataTime, totalWeight,
-                    customer.FullName, customer.Address, customer.PaymentsMethod);
+                    // Console.WriteLine("Press any key to continue...");
+                    // Console.ReadKey();
+                    email.SendMailCreateOrder(emailUser, order.Id, order.Price, cartList, order.Status, order.OrderDataTime, totalWeight, customer.FullName, customer.Address, customer.PaymentsMethod);
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    Console.WriteLine("Thanks for your order!");
+                }
+                orderRepository.DeleteOrder(order.Id);
             }
             else if (userNum == 0 && sumOrder == 0)
             {
@@ -215,8 +219,6 @@ void MainMenu(Order order)
             Validator.WrongDataMessage();
         }
     }
-
-    Console.WriteLine("Thanks for your order!");
 }
 
 void ByeBye()
@@ -227,6 +229,7 @@ void ByeBye()
 
 void OrderInfo(Order order, int totalWeight)
 {
+    order.Status = Order.OrderStatus.Draft;
     var cartList = string.Empty;
     foreach (var name in order.SushiList) cartList = cartList + name + ", ";
     Console.WriteLine("Your Order is: ");

@@ -16,7 +16,7 @@ public class EmailSender
     public DateTime DataNow { get; set; }
     public int Weight { get; set; }
     
-    public void SendMail(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weight, string fullName, string adress, Enum payments)
+    public void SendMailCreateOrder(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weight, string fullName, string adress, Enum payments)
     {
         MailAddress from = new MailAddress(_email, _displayName);
         MailAddress to = new MailAddress(userEmail);
@@ -25,6 +25,36 @@ public class EmailSender
         msg.Body = $"Hello, Dear {fullName}! \n" +
                    $"\n" +
                    "We have received your order! \n" +
+                   "---------------------------------------------------------------------------------------  \n" +
+                   $"Order ID: {id} \n" +
+                   $"Price: {price} USD. \n" +
+                   $"Sushi: {list} \n" +
+                   $"Total weignt: {weight} g \n" +
+                   $"Status: {status} \n" +
+                   $"Order Data: {dataNow} \n" +
+                   "--------------------------------------------------------------------------------------  \n" +
+                   $"Delivery time: {dataNow.AddHours(1)} \n" +
+                   $"Delivery to: {adress} \n" +
+                   $"Payment method: {payments}";
+        
+        SmtpClient smtp = new SmtpClient();
+        smtp.Host = "smtp.gmail.com";
+        smtp.Port = 587;
+        smtp.EnableSsl = true;
+        smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
+        smtp.Credentials = new NetworkCredential(from.Address, _password);
+        smtp.Send(msg);
+    }
+    
+    public void SendMailSetStatusToInProgress(string userEmail, Guid id, float price, string list, Enum status, DateTime dataNow, int weight, string fullName, string adress, Enum payments)
+    {
+        MailAddress from = new MailAddress(_email, _displayName);
+        MailAddress to = new MailAddress(userEmail);
+        MailMessage msg = new MailMessage(from, to);
+        msg.Subject = $"New Test Order {id}";
+        msg.Body = $"Hello, Dear {fullName}! \n" +
+                   $"\n" +
+                   "We are glad to inform you that your order status has changed to \"In Progress\"! \n" +
                    "---------------------------------------------------------------------------------------  \n" +
                    $"Order ID: {id} \n" +
                    $"Price: {price} USD. \n" +
