@@ -35,16 +35,9 @@ internal class LoggerService<T>: ILoggerService<T>
                 case LogLevel.Error:
                     LogError(response);
                     break;
-                //case LogLevel.Critical://
-                //    LogCritical(response);
-                //    break;
             }
         }
 
-        //public void Trace(string message)//
-        //{
-        //    _fileService.WriteLog(message);
-        //}
 
         public void LogInformation(string message)
         {
@@ -54,18 +47,9 @@ internal class LoggerService<T>: ILoggerService<T>
         {
             _fileService.WriteLog(message);
         }
-        //public void LogWarning(string message)
-        //{
-        //    _fileService.WriteLog(message);
-        //}
         
         public void LogError(string message)
         {
             _fileService.WriteLog(message);
         }
-
-    //    public void LogCritical(string message)
-    //    {
-    //        _fileService.WriteLog(message);
-    //    }
     }

@@ -11,7 +11,7 @@ public static class Validator
             string data = Console.ReadLine();
             if (data.Equals(String.Empty))
             {
-                Console.Write("You didn't enter anything! Enter a valid value!");
+                Console.Write("Вы ничего не ввели! Напишите ответ!");
                 Console.WriteLine();
             }
             else
@@ -28,12 +28,12 @@ public static class Validator
             string data = Console.ReadLine();
             if (data.Equals(String.Empty))
             {
-                Console.Write("You didn't enter anything! Enter a valid value!");
+                Console.Write("Вы ничего не ввели! Напишите ответ!");
                 Console.WriteLine();
             }
             else if (data.Any(char.IsLetter))
             {
-                Console.Write("Phone number must not contain letters! Enter a valid value!");
+                Console.Write("Телефонный номер не должен содержать букв! Введите только цифры!");
                 Console.WriteLine();
             }
             else
@@ -50,7 +50,7 @@ public static class Validator
             string data = Console.ReadLine();
             if (data.Equals(String.Empty))
             {
-                Console.Write("You didn't enter anything! Enter a valid value!");
+                Console.Write("Вы ничего не ввели! Напишите ответ!");
                 Console.WriteLine();
             }
             else
@@ -60,7 +60,7 @@ public static class Validator
                 {
                     return data;
                 }
-                Console.Write("Your email should be valid!");
+                Console.Write("Введите корректный адрес электронной почты!");
                 Console.WriteLine();
             }
         }
@@ -73,21 +73,21 @@ public static class Validator
             string data = Console.ReadLine();
             if (data.Equals(String.Empty))
             {
-                Console.Write("You didn't enter anything! Enter a valid value!");
+                Console.Write("Вы ничего не ввели! Введите ответ!");
                 Console.WriteLine();
             }
-            else if ((data.ToLower().Equals("n")) || (data.ToLower().Equals("y")))
+            else if ((data.ToLower().Equals("нет")) || (data.ToLower().Equals("да")))
             {
                 return data;
             }
             else
             {
-                Console.WriteLine("Wrong data! Enter a valid value - [Y] or [N]!");
+                Console.WriteLine("Некорректный ответ! Введите - [Да] либо [Нет]!");
             }
         }
     }
     public static void WrongDataMessage()
     {
-        Console.WriteLine("Wrong data! Enter a valid value!");
+        Console.WriteLine("Некорректный ответ!");
     }
 }

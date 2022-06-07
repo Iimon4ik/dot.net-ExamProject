@@ -4,5 +4,5 @@ namespace SushiShop.Interfaces;
 
 public interface ICustomerRepository
 {
-    Customer CreateCustomer(string fullName, string address, string phoneNumber, Guid guid);
+    Customer CreateCustomer(string fullName, string address, string phoneNumber, int guid);
 }

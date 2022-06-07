@@ -3,13 +3,14 @@ namespace SushiShop.Services
     internal class FileService : IFileService
 
     {
-        private string PATH = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " +
+        private string PATH = @"/Users/etcio/source/repos/Iimon4ik/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " +
                     DateTime.Now.ToString("yyyymmdd") + ".txt";
         
         public void log_function(string error)
         {
             StreamWriter sw;
-            FileInfo log_file = new FileInfo(@"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " + DateTime.Now.ToString("yyyymmdd") + "[1]" + ".txt");
+            FileInfo log_file = new FileInfo(@"/Users/etcio/source/repos/Iimon4ik/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " +
+                DateTime.Now.ToString("yyyymmdd") + "[1]" + ".txt");
             
             try
             {
@@ -17,7 +18,10 @@ namespace SushiShop.Services
                 if (fileByteSize >= 245760)
                 {
                     int i=1;
-                    File.Move(@"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " + DateTime.Now.ToString("yyyymmdd") + "1" + ".txt", @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " + DateTime.Now.ToString("yyyymmdd") + "[" + (++i) +"]" + ".txt");
+                    File.Move(@"/Users/etcio/source/repos/Iimon4ik/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " +
+                        DateTime.Now.ToString("yyyymmdd") + "1" + 
+                        ".txt", @"/Users/etcio/source/repos/Iimon4ik/CSharp.DiplomProject/SushiShop/SushiShop/log/" + " " +
+                        DateTime.Now.ToString("yyyymmdd") + "[" + (++i) +"]" + ".txt");
                 }
                 sw = log_file.AppendText();
                 sw.WriteLine(DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss\t"));
@@ -28,7 +32,7 @@ namespace SushiShop.Services
             catch
             {
                 StreamWriter sw_e;
-                FileInfo log_error = new FileInfo(@"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/log/test1.log");
+                FileInfo log_error = new FileInfo(@"/Users/etcio/source/repos/Iimon4ik/CSharp.DiplomProject/SushiShop/SushiShop/log/test1.log");
                 
                 sw_e = log_file.AppendText();
                 sw_e.WriteLine(DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss\t"));

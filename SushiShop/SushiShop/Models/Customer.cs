@@ -10,30 +10,20 @@ public class Customer
     private string _fullName;
     private string _address;
     private string _eMail;
-    private Payments _paymentsMethod;
     private string _phoneNumber;
-    private Guid _orderId;
+    private int _orderId;
     
-    public enum Payments
-    {
-        Cash,
-        DebitCard,
-        CreditCard,
-        LongTermsPayments
-    }
     public string FullName { get; }
     public string Address { get; }
-    public Payments PaymentsMethod { get; }
     private string PhoneNumber { get; }
-    private Guid OrderId { get; }
+    private int OrderId { get; }
 
-    public Customer(string fullName, string address, string phoneNumber, Guid orderId)
+    public Customer(string fullName, string address, string phoneNumber, int orderId)
     {
         _fileService = new FileService();
         _loggerService = new LoggerService<Customer>(_fileService);
         FullName = fullName;
         Address = address;
-        PaymentsMethod = Payments.Cash;
         PhoneNumber = phoneNumber;
         OrderId = orderId;
         _loggerService.Log(LogLevel.Information, $"New customer {FullName} created.");

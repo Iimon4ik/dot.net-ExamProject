@@ -1,137 +1,72 @@
 [
   {
     "id": 1,
-    "Name": "Springfield",
-    "Size": "8 pcs",
-    "Weight": 270,
-    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-    "Сalories": "588.7 kkal",
-    "Price": 9.2
+    "Name": "Экивоки",
+    "Size": "8 шт",
+    "Сompound": "Эко лосось (растительный), сливочным сыр, салат айсберг, огурец, авокадо, чипсы бекона, нити чили, соус Терияки",
+    "Price": 14.9
   },
   {
     "id": 2,
-    "Name": "Ostin",
-    "Size": "8 pcs",
-    "Weight": 255,
-    "Сompound": "Cream cheese, surimi, Tamago omelet, tomato, Nut sauce, chuka salad.",
-    "Сalories": "528.0 kkal",
-    "Price": 7.8
+    "Name": "Тори Чизу",
+    "Size": "8 шт",
+    "Сompound": "Цыпленок ким-чи, сливочный сыр, огурец, сыр чеддер, картофель пай, соус Цезарь",
+    "Price": 9.9
   },
   {
     "id": 3,
-    "Name": "Mantana",
-    "Size": "8 pcs",
-    "Weight": 310,
-    "Сompound": "Smoked eel, cream cheese, soy cheese Tofu, avocado, leek, black Tobiko caviar, spicy sauce, Teriyaki sauce. Acute.",
-    "Сalories": "438.3 kkal",
-    "Price": 11
+    "Name": "Батакон",
+    "Size": "8 шт",
+    "Сompound": "Бекон обпаленный, сливочный сыр, зелёный лук, сыр чеддер, соус Терияки",
+    "Price": 9.9
   },
   {
     "id": 4,
-    "Name": "Arkansas",
-    "Size": "8 pcs",
-    "Weight": 260,
-    "Сompound": "Smoked eel, cream cheese, takuan, Teriyaki sauce, sesame.",
-    "Сalories": "650.7 kkal",
-    "Price": 8.7
+    "Name": "Бали",
+    "Size": "8 шт",
+    "Сompound": "Копченый лосось, креветка в темпуре, манго, сливочный сыр, соус Спайси",
+    "Price": 16.8
   },
   {
     "id": 5,
-    "Name": "Fiji",
-    "Size": "8 pcs",
-    "Weight": 270,
-    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-    "Сalories": "528 kkal",
-    "Price": 10
+    "Name": "Дракон",
+    "Size": "8 шт",
+    "Сompound": "Сом, сливочный сыр, огурец, икра летучей рыбы, соус Спайси, зелёный лук, стружка тунца",
+    "Price": 15.5
   },
   {
     "id": 6,
-    "Name": "San Antonio",
-    "Size": "8 pcs",
-    "Weight": 225,
-    "Сompound": "Salmon fillet, tuna fillet, cream cheese, takuan, arugula, rice paper.",
-    "Сalories": "619 kkal",
-    "Price": 7.1
+    "Name": "Флорида",
+    "Size": "8 шт",
+    "Сompound": "Тунец, сливочный сыр, салат Айсберг и кунжутное масло",
+    "Price": 11.4
   },
   {
     "id": 7,
-    "Name": "Churanci Black",
-    "Size": "8 pcs",
-    "Weight": 225,
-    "Сompound": "Tempura shrimp, cream cheese, black Tobiko caviar, mango, Los Angeles sauce.",
-    "Сalories": "520.8 kkal",
-    "Price": 9
+    "Name": "Канада",
+    "Size": "8 шт",
+    "Сompound": "Угорь, огурец, сливочный сыр, авокадо, соус Унаги, кунжут белый",
+    "Price": 22.8
   },
   {
     "id": 8,
-    "Name": "Malibu",
-    "Size": "8 pcs",
-    "Weight": 265,
-    "Сompound": "Salmon fillet, mango, cream cheese, chili, honey, chili strands.",
-    "Сalories": "498.7 kkal",
-    "Price": 10
+    "Name": "Куросаки",
+    "Size": "8 шт",
+    "Сompound": "Акула, японский омлет, грибы, соус Спайси, сливочный сыр, такуан, соус Терияки",
+    "Price": 15.5
   },
   {
     "id": 9,
-    "Name": "Okinawa",
-    "Size": "8 pcs",
-    "Weight": 255,
-    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, cucumber, black Tobiko caviar, Teriyaki sauce.",
-    "Сalories": "468.7 kkal",
-    "Price": 6.4
+    "Name": "Манхеттен",
+    "Size": "8 шт",
+    "Сompound": "Сом, копчёный лосось, сливочный сыр, соус Спайси, огурец, икра летучей рыбы, кунжут черный",
+    "Price": 19.9
   },
   {
     "id": 10,
-    "Name": "Hawaii",
-    "Size": "8 pcs",
-    "Weight": 270,
-    "Сompound": "Salmon fillet, cream cheese, Teriyaki sauce, orange Tobiko caviar, soy sauce, cashew nuts.",
-    "Сalories": "608.7 kkal",
+    "Name": "Эдо",
+    "Size": "8 шт",
+    "Сompound": "Креветка в темпуре, сливочный сыр, огурец, соус Терияки, кунжут белый",
     "Price": 7.7
-  },
-  {
-    "id": 11,
-    "Name": "Bonito",
-    "Size": "8 pcs",
-    "Weight": 245,
-    "Сompound": "Salmon fillet, smoked eel, cream cheese, Tamago omelette, Shrimp, cream cheese, avocado, tomato, arugula.",
-    "Сalories": "496.7 kkal",
-    "Price": 11
-  },
-  {
-    "id": 12,
-    "Name": "Manchester",
-    "Size": "8 pcs",
-    "Weight": 275,
-    "Сompound": "Grilled salmon fillet, takuan, cream cheese, Tamago omelet, Los Angeles sauce, sesame seeds.",
-    "Сalories": "476.7 kkal",
-    "Price": 5.9
-  },
-  {
-    "id": 13,
-    "Name": "Hong-Kong",
-    "Size": "8 pcs",
-    "Weight": 300,
-    "Сompound": "Surimi, cream cheese, iceberg lettuce, takuan, spicy sauce. Acute.",
-    "Сalories": "567.7 kkal",
-    "Price": 8.2
-  },
-  {
-    "id": 14,
-    "Name": "Niagara",
-    "Size": "8 pcs",
-    "Weight": 240,
-    "Сompound": "Shrimp, avocado, cream cheese, tomato, sweet-nut sauce, black Tobiko caviar, chili strands.",
-    "Сalories": "543.7 kkal",
-    "Price": 7.8
-  },
-  {
-    "id": 15,
-    "Name": "Honolulu",
-    "Size": "8 pcs",
-    "Weight": 235,
-    "Сompound": "Shrimp, cream cheese, avocado, tomato, arugula, cilantro, lime, sweet chili sauce, chili strands.",
-    "Сalories": "531.7 kkal",
-    "Price": 9.3
   }
 ]

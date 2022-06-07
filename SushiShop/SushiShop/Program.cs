@@ -1,15 +1,14 @@
-﻿using System.Reflection;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SushiShop;
 using SushiShop.Interfaces;
 using SushiShop.Models;
 
-const string path = @"/Users/alexey/CSharp.DiplomProject/SushiShop/SushiShop/Data/sushi_list.json";
+const string PATH = @"/Users/etcio/source/repos/Iimon4ik/DiplomProject/SushiShop/SushiShop/Data/sushi_list.json";
 // string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data/sushi_list.json");
 
 static List<Sushi> GetSushiMenu()
 {
-    string fileName = path;
+    string fileName = PATH;
     if (File.Exists(fileName))
     {
         var sushi = JsonConvert.DeserializeObject<List<Sushi>>(File.ReadAllText(fileName));
@@ -18,8 +17,7 @@ static List<Sushi> GetSushiMenu()
     return null;
     };
 var sushi = GetSushiMenu();
-
-EmailSender email = new EmailSender();
+Email email = new Email();
 bool secondaryFlag;
 bool mainFlag = true;
 OrderRepository orderRepository = new OrderRepository();
@@ -27,66 +25,62 @@ CustomerRepository customerRepository = new CustomerRepository();
 
 while (mainFlag.Equals(true))
 {
-    Console.WriteLine("Welcome to our sushi shop!");
-    Console.WriteLine("To get started, type [Start].");
-    string firstChoice = Console.ReadLine();
-    if ((firstChoice.ToLower()).Equals("start"))
+    Console.WriteLine("Добро пожаловать в Суши-бот! Чтобы начать, введите \"Начать\".");
+    string answer = Console.ReadLine();
+    if ((answer.ToLower()).Equals("начать"))
     {
         Order order = orderRepository.CreateOrder();
         mainFlag = false;
         Console.Clear();
         Back:
         Console.Clear();
-        Console.WriteLine("Select the required item:");
-        Console.WriteLine();
-        Console.WriteLine("Press [1] to show menu.");
-        Console.WriteLine("Press [2] to show order status.");
-        Console.WriteLine("Press [3] to cancel your order.");
-        Console.WriteLine("--------------------------------");
-        Console.WriteLine("Press [0] to exit.");
-        string secondChoice = Console.ReadLine();
+        Console.WriteLine("Что вы хотите сделать?\n");
+        Console.WriteLine("Введите \"Меню\" чтобы посмотреть меню.\n");
+        Console.WriteLine("Введите \"Заказ\" чтобы посмотреть статус заказа.\n");
+        Console.WriteLine("Введите \"Отмена\" чтобы отменить заказ.\n\n\n");
+        Console.WriteLine("Введите \"Выход\" чтобы выйти из бота, но я все таки советую хотя бы посмотреть наше меню =)");
+        string secondChoice = Console.ReadLine().ToLower();
         Console.Clear();
         switch (secondChoice)
         {
-            case "1":
+            case "меню":
                 secondaryFlag = true;
                 MainMenu(order);
                 goto Back;
-            case "2":
-                bool thirdFlag = true;
+            case "заказ":
                 while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine("Please, enter Order ID!");
-                    Console.WriteLine("Or [0] for return to prev. menu.");
+                    Console.WriteLine("Пожалуйста, введите номер вашего заказ!");
+                    Console.WriteLine("или \"0\" чтобы вернуться в прыдущее меню.");
                     string? idGet = Validator.Validation();
                     
                     if (idGet != null && !idGet.Equals(null) && !idGet.Equals("0"))
                     {
-                        orderRepository.GetOrderById(Guid.Parse(idGet));
+                        orderRepository.GetOrderById(int.Parse(idGet));
                     }
-                    else if(idGet.Equals("0"))
+                    else if(idGet.ToLower().Equals("0"))
                     {
                         goto Back;
                     }
                 }
-            case "3":
+            case "отмена":
                 while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine("Please, enter Order ID!");
-                    Console.WriteLine("Or [0] for return to prev. menu.");
-                    string idGet = Console.ReadLine();
+                    Console.WriteLine("Пожалуйста, введите номер заказа");
+                    Console.WriteLine("Или введите \"0\" чтобы вернуться в прошлое меню.");
+                    string idGet = Console.ReadLine().ToLower() ;
                     if (!idGet.Equals(null) && !idGet.Equals("0"))
                     {
-                        orderRepository.DeleteOrder(Guid.Parse(idGet));
-                        Console.WriteLine("Press any key to continue...");
+                        orderRepository.DeleteOrder(int.Parse(idGet));
+                        Console.WriteLine("Нажмите что-нибудь чтобы продолжить");
                         Console.ReadKey();
                         goto Back;
                     }
                     Validator.WrongDataMessage();
                 }
-            case "0":
+            case "выход":
                 orderRepository.DeleteOrder(order.Id);
                 ByeBye();
                 break;
@@ -105,19 +99,18 @@ void MainMenu(Order order)
 {
     order = orderRepository.CreateOrder();
     Console.Clear();
-    Console.WriteLine("--- Sushi-Shop Menu ---");
+    Console.WriteLine("Меню суши");
     Console.WriteLine();
     for (int i = 0; i < sushi.Count; i++)
     {
-        Console.WriteLine($"Number: {sushi[i].Id}");
-        Console.WriteLine($"Name: {sushi[i].Name}");
-        Console.WriteLine($"Size: {sushi[i].Size}, Weight: {sushi[i].Weight} g");
-        Console.WriteLine($"Сompound: {sushi[i].Сompound}");
-        Console.WriteLine($"Сalories: {sushi[i].Сalories}");
-        Console.WriteLine($"Price: {sushi[i].Price} $");
-        Console.WriteLine("---------------------------");
+        Console.WriteLine($"№: {sushi[i].Id}");
+        Console.WriteLine($"Название: {sushi[i].Name}");
+        Console.WriteLine($"Шт.: {sushi[i].Size}");
+        Console.WriteLine($"Описание: {sushi[i].Сompound}");
+        Console.WriteLine($"Цена: {sushi[i].Price} руб.");
+        Console.WriteLine();
     }
-    Console.WriteLine($"Enter the sushi number [1-{sushi.Count}] to add to the order and [0] for end: ");
+    Console.WriteLine($"Введите номер суши от \"1\" до \"{sushi.Count}\" для добавления в заказ и \"0\" для завершения выбора: ");
     float sumOrder = 0;
     int totalWeight = 0;
     List<string> draftList = new List<string>();
@@ -134,8 +127,7 @@ void MainMenu(Order order)
             {
                 draftList.Add(sushi[userNum - 1].Name);
                 sumOrder += sushi[userNum - 1].Price;
-                totalWeight += sushi[userNum - 1].Weight;
-                Console.WriteLine($"Sushi: \"{sushi[userNum - 1].Name}\" - Weight: {sushi[userNum - 1].Weight}g - Price: {sushi[userNum - 1].Price}$ -> Added to cart!");
+                Console.WriteLine($"Суши: \"{sushi[userNum - 1].Name}\", цена {sushi[userNum - 1].Price}руб. добавлено в заказ!");
             }
             else if (userNum == 0 && sumOrder != 0)
             {
@@ -146,56 +138,55 @@ void MainMenu(Order order)
                 var cartList = string.Empty;
                 order.OrderDataTime = DateTime.Now;
                 string trueData;
-
-                order.SetStatusToInProgress();
                 
-                foreach (var name in order.SushiList) cartList = cartList + name + ", ";
+                foreach (var food in order.SushiList) cartList = cartList + food + ", ";
                 
                 OrderInfo(order, totalWeight);
 
-                Console.WriteLine("For To proceed with your order, enter your details: ");
+                Console.WriteLine("Чтобы оформить ваш заказ, введите Ваши реквизиты: ");
                 
-                Console.WriteLine("Enter your [full name]: ");
-                string fullName = Validator.Validation();
+                Console.WriteLine("Введите своё имя: ");
+                string name = Validator.Validation();
                 Console.WriteLine();
                 
-                Console.WriteLine("Enter your [address]: ");
+                Console.WriteLine("Введите ваш адрес: ");
                 string address = Validator.Validation();
                 Console.WriteLine();
                 
-                Console.WriteLine("Enter your [E-mail]: ");
+                Console.WriteLine("Введите ваш email: ");
                 string emailUser = Validator.EmailAddressValidation();
                 Console.WriteLine();
                 
-                Console.WriteLine("Enter your [phone number]: ");
+                Console.WriteLine("Введите ваш номер телефона: ");
                 string phoneNumber = Validator.PhoneValidation();
                 Console.WriteLine();
                 
-                Console.Write("Confirm that the entered data is correct.");
-                Console.Write("Press [Y] - yes, [N] - no.");
+                Console.WriteLine("Введеные вами данные корректны?");
+                Console.WriteLine("  Имя: {0} \n  Адрес: {1} \n  Email: {2} \n  Номер телефона: {3}", name, address, 
+                    emailUser, phoneNumber);
+                Console.Write("Введите Да или Нет");
                 Console.WriteLine();
                 
                 trueData = Validator.ConfirmationValidation();
                 
-                if (trueData.Equals("y"))
+                if (trueData.Equals("да"))
                 {
-                    Customer customer = customerRepository.CreateCustomer(fullName, address, phoneNumber, order.Id);
-                    order.SetStatusToСonfirmed();
-                    email.SendMailCreateOrder(emailUser, order.Id, order.Price, cartList, order.Status, order.OrderDataTime, totalWeight, customer.FullName, customer.Address, customer.PaymentsMethod);
+                    Customer customer = customerRepository.CreateCustomer(name, address, phoneNumber, order.Id);
+                    email.SendMailCreateOrder(emailUser, order.Id, order.Price, cartList, order.OrderDataTime,
+                        customer.FullName, customer.Address);
                     OrderService.orders.Add(order);
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-                    Console.WriteLine("Thanks for your order!");
+                    Console.WriteLine("Нажмите любую кнопку чтобы продолжить.");
+                    Console.WriteLine("Спасибо за заказ!");
                 }
-                else if ((trueData.Equals("n")))
+                else if ((trueData.Equals("нет")))
                 {
                     orderRepository.DeleteOrder(order.Id);
                 }
             }
             else if (userNum == 0 && sumOrder == 0)
             {
-                Console.WriteLine("Your cart is empty!");
-                Console.WriteLine("Press any key to continue...");
+                Console.WriteLine("Ваша корзина заказов пуста!");
+                Console.WriteLine("Нажмите любую кнопку чтобы продолжить.");
                 orderRepository.DeleteOrder(order.Id);
                 Console.ReadKey();
                 
@@ -216,7 +207,7 @@ void MainMenu(Order order)
 void ByeBye()
 {
     Console.Clear();
-    Console.WriteLine("Bye-bye!");
+    Console.WriteLine("До свидания!");
 }
 
 void OrderInfo(Order order, int totalWeight)
@@ -224,20 +215,13 @@ void OrderInfo(Order order, int totalWeight)
     order.Status = Order.OrderStatus.Draft;
     var cartList = string.Empty;
     foreach (var name in order.SushiList) cartList = cartList + name + ", ";
-    Console.WriteLine("Your Order is: ");
-    Console.WriteLine("******************************");
-    Console.WriteLine($"Order ID: {order.Id}");
-    Console.WriteLine($"Price: {order.Price} USD.");
-    Console.WriteLine($"Status: {order.Status}");
-    Console.Write($"Sushi: {cartList}");
-
+    Console.WriteLine("Ваш заказ: ");
     Console.WriteLine();
-                
-    Console.WriteLine($"Total weignt: {totalWeight} g");
-    Console.WriteLine($"Data: {order.OrderDataTime}");
-    Console.WriteLine("******************************");
-
+    Console.WriteLine($"Номер заказа: {order.Id}");
+    Console.WriteLine($"Стоимость: {order.Price} руб.");
+    Console.WriteLine($"Статус: {order.Status}");
+    Console.Write($"Список заказа: {cartList}");
+    Console.WriteLine();       
+    Console.WriteLine($"Дата: {order.OrderDataTime}");
     Console.WriteLine();
 }
-
-

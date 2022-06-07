@@ -12,7 +12,7 @@ public class OrderRepository: IOrderRepository
 
     }
     
-    public void GetOrderById(Guid id)
+    public void GetOrderById(int id)
     {
         try
         {
@@ -20,11 +20,11 @@ public class OrderRepository: IOrderRepository
             {
                 if (order.Id.Equals(id))
                 {
-                    Console.WriteLine($"Order ID: {order.Id} - STATUS -> {order.Status}");
+                    Console.WriteLine($"Заказ номер: {order.Id} - состояние > {order.Status}");
                 }
                 else
                 {
-                    throw new Exception("Order with this ID doesn't exist!");
+                    throw new Exception("Заказ с таким номером не существует");
                 }
             }
         }
@@ -38,7 +38,7 @@ public class OrderRepository: IOrderRepository
         }
     }
 
-    public void DeleteOrder(Guid id)
+    public void DeleteOrder(int id)
     {
         try
         {
@@ -49,7 +49,7 @@ public class OrderRepository: IOrderRepository
                     OrderService.orders.Remove(OrderService.orders[i]);
                 }
             }
-            throw new Exception("Order with this ID doesn't exist!");
+            throw new Exception("Заказ с таким номером не существует!");
         }
         catch(Exception exception)
         {
